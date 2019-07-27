@@ -4,10 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import ru.xpendence.mylovelytaxservice.dto.UserDto;
 import ru.xpendence.mylovelytaxservice.entity.User;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Author: Vyacheslav Chernyshov
@@ -24,4 +26,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             nativeQuery = true
     )
     List<String> getEmailsForInform(@Param("start") LocalDate start, @Param("finish") LocalDate finish);
+
+    Optional<UserDto> getByUsernameAndPassword(String username, String password);
 }

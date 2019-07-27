@@ -17,11 +17,11 @@ import javax.validation.constraints.Null;
 @Data
 public class UserDto extends AbstractDto {
 
-    @NotNull(groups = {Validation.New.class})
+    @NotNull(groups = {Validation.New.class, Validation.Login.class})
     @Null(groups = {Validation.Exists.class})
     private String username;
 
-    @NotNull(groups = {Validation.New.class})
+    @NotNull(groups = {Validation.New.class, Validation.Login.class})
     private String password;
 
     @NotNull(groups = {Validation.New.class})

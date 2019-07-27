@@ -24,6 +24,8 @@ public interface UserService {
 
     List<String> getEmailToInform(LocalDate start, LocalDate finish);
 
+    UserDto getByCredentials(String username, String login);
+
     Page<UserDto> getAll(Pageable pageable);
 
     boolean delete(Long id);

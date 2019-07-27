@@ -15,4 +15,8 @@ public interface Validation {
     interface Exists {
 
     }
+
+    interface Login {
+
+    }
 }
