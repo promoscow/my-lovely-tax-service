@@ -1,6 +1,5 @@
 package ru.xpendence.mylovelytaxservice.entity;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,6 +28,8 @@ public class User extends AbstractEntity {
     private String username;
     private String password;
     private String name;
+    private String email;
+    private Long inn;
 
     @Column(name = "username")
     public String getUsername() {
@@ -43,5 +44,15 @@ public class User extends AbstractEntity {
     @Column(name = "name")
     public String getName() {
         return name;
+    }
+
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
+
+    @Column(name = "inn")
+    public Long getInn() {
+        return inn;
     }
 }

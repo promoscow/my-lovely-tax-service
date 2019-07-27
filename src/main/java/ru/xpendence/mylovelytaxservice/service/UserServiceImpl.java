@@ -1,6 +1,5 @@
 package ru.xpendence.mylovelytaxservice.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,8 +8,6 @@ import ru.xpendence.mylovelytaxservice.entity.User;
 import ru.xpendence.mylovelytaxservice.exception.DataBaseException;
 import ru.xpendence.mylovelytaxservice.mapper.impl.UserMapper;
 import ru.xpendence.mylovelytaxservice.repository.UserRepository;
-
-import java.util.Optional;
 
 /**
  * Author: Vyacheslav Chernyshov

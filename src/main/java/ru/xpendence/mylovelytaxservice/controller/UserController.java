@@ -1,10 +1,9 @@
 package ru.xpendence.mylovelytaxservice.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.xpendence.mylovelytaxservice.dto.UserDto;
-import ru.xpendence.mylovelytaxservice.entity.User;
 import ru.xpendence.mylovelytaxservice.service.UserService;
 
 /**
@@ -24,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> create(@RequestBody UserDto dto) {
+    public ResponseEntity<UserDto> create(@RequestBody UserDto dto) throws JsonProcessingException {
         return ResponseEntity.ok(service.create(dto));
     }
 
