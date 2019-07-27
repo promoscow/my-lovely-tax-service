@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.xpendence.mylovelytaxservice.dto.InspectionDto;
 import ru.xpendence.mylovelytaxservice.service.InspectionService;
 
-import java.util.List;
-
 /**
  * Author: Vyacheslav Chernyshov
  * Date: 27.07.19
@@ -32,7 +30,7 @@ public class InspectionController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<InspectionDto>> getForUser(@RequestParam Long userId) {
+    public ResponseEntity<Boolean> getForUser(@RequestParam Long userId) {
         return ResponseEntity.ok(service.getForUser(userId));
     }
 }

@@ -1,14 +1,17 @@
 package ru.xpendence.mylovelytaxservice.service;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.xpendence.mylovelytaxservice.dto.InspectionDto;
-import ru.xpendence.mylovelytaxservice.dto.UserDto;
+import ru.xpendence.mylovelytaxservice.entity.Inspection;
 import ru.xpendence.mylovelytaxservice.exception.DataBaseException;
 import ru.xpendence.mylovelytaxservice.mapper.impl.InspectionMapper;
 import ru.xpendence.mylovelytaxservice.repository.InspectionRepository;
+import ru.xpendence.mylovelytaxservice.util.InspectionsParser;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Author: Vyacheslav Chernyshov
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
  * e-mail: v.chernyshov@pflb.ru
  */
 @Service
+@Slf4j
 public class InspectionServiceImpl implements InspectionService {
 
     private final InspectionRepository repository;
@@ -38,11 +42,24 @@ public class InspectionServiceImpl implements InspectionService {
     }
 
     @Override
-    public List<InspectionDto> getForUser(Long userId) {
-        UserDto userDto = userService.get(userId);
-        return repository.findByUserInn(userDto.getInn())
-                .stream()
-                .map(mapper::toDto)
-                .collect(Collectors.toList());
+    public Boolean getForUser(Long userId) {
+        return repository.findByUserInn(userService.get(userId).getInn())
+                .stream().anyMatch(i -> i.getStartDate().getMonth().equals(LocalDate.now().getMonth())
+                        || i.getStartDate().plusDays(3L).getMonth().equals(LocalDate.now().getMonth())
+                );
+    }
+
+    @Override
+    @Scheduled(initialDelay = 5000L, fixedDelay = 604800000L)
+    public void parse() {
+        List<Inspection> inspections = InspectionsParser.parse();
+        if (inspections != null && !inspections.isEmpty()) {
+            List<Inspection> saved = repository.saveAll(inspections);
+            log.info("Inspections saved: {}", saved.size());
+            if (saved.isEmpty() || inspections.size() != saved.size()) {
+                throw new DataBaseException("Ошибка обновления справочника проверок.");
+            }
+        }
+        System.out.println();
     }
 }

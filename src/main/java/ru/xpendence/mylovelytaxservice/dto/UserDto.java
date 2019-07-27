@@ -32,4 +32,7 @@ public class UserDto extends AbstractDto {
 
     @NotNull(groups = {Validation.New.class})
     private Long inn;
+
+    @NotNull(groups = {Validation.New.class})
+    private Long ogrn;
 }

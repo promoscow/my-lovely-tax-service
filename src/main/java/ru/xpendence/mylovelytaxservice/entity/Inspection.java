@@ -9,7 +9,7 @@ import org.hibernate.annotations.Where;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * Author: Vyacheslav Chernyshov
@@ -32,44 +32,44 @@ public class Inspection extends AbstractEntity {
     private Long inn;
     private String inspectionTarget;
     private String otherReasons;
-    private LocalDateTime startDate;
+    private LocalDate startDate;
     private Integer limitationDays;
     private Integer limitationHours;
     private String format;
     private String note;
 
-    @Column(name = "company_name")
+    @Column(name = "company_name", length = 1000)
     public String getCompanyName() {
         return companyName;
     }
 
-    @Column(name = "official_location")
+    @Column(name = "official_location", length = 1000)
     public String getOfficialLocation() {
         return officialLocation;
     }
 
-    @Column(name = "ogrn", unique = true)
+    @Column(name = "ogrn")
     public Long getOgrn() {
         return ogrn;
     }
 
-    @Column(name = "inn", unique = true)
+    @Column(name = "inn")
     public Long getInn() {
         return inn;
     }
 
-    @Column(name = "inspection_target")
+    @Column(name = "inspection_target", length = 4000)
     public String getInspectionTarget() {
         return inspectionTarget;
     }
 
-    @Column(name = "other_reasons")
+    @Column(name = "other_reasons", length = 1000)
     public String getOtherReasons() {
         return otherReasons;
     }
 
     @Column(name = "start_date")
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
@@ -88,7 +88,7 @@ public class Inspection extends AbstractEntity {
         return format;
     }
 
-    @Column(name = "note")
+    @Column(name = "note", length = 4000)
     public String getNote() {
         return note;
     }

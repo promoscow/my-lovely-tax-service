@@ -1,8 +1,8 @@
 package ru.xpendence.mylovelytaxservice.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import ru.xpendence.mylovelytaxservice.dto.UserDto;
 
 /**
@@ -13,9 +13,9 @@ import ru.xpendence.mylovelytaxservice.dto.UserDto;
  */
 public interface UserService {
 
-    UserDto create(UserDto dto);
+    UserDto create(UserDto dto) throws JsonProcessingException;
 
-    UserDto update(UserDto dto);
+    UserDto update(UserDto dto) throws JsonProcessingException;
 
     UserDto get(Long id);
 

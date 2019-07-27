@@ -3,7 +3,7 @@ package ru.xpendence.mylovelytaxservice.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * Author: Vyacheslav Chernyshov
@@ -21,7 +21,7 @@ public class InspectionDto extends AbstractDto {
     private Long inn;
     private String inspectionTarget;
     private String otherReasons;
-    private LocalDateTime startDate;
+    private LocalDate startDate;
     private Integer limitationDays;
     private Integer limitationHours;
     private String format;

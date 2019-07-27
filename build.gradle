@@ -29,6 +29,10 @@ dependencies {
     runtime('com.h2database:h2')
     compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.5'
     annotationProcessor 'org.projectlombok:lombok'
+
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.0'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }

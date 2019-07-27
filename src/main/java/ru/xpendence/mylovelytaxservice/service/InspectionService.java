@@ -2,8 +2,6 @@ package ru.xpendence.mylovelytaxservice.service;
 
 import ru.xpendence.mylovelytaxservice.dto.InspectionDto;
 
-import java.util.List;
-
 /**
  * Author: Vyacheslav Chernyshov
  * Date: 27.07.19
@@ -14,5 +12,7 @@ public interface InspectionService {
 
     InspectionDto get(Long id);
 
-    List<InspectionDto> getForUser(Long userId);
+    Boolean getForUser(Long userId);
+
+    void parse();
 }

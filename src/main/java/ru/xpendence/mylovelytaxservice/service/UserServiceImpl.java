@@ -1,5 +1,8 @@
 package ru.xpendence.mylovelytaxservice.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ import ru.xpendence.mylovelytaxservice.repository.UserRepository;
  * e-mail: v.chernyshov@pflb.ru
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
@@ -28,15 +32,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto create(UserDto dto) {
-        return mapper.toDto(repository.save(mapper.toEntity(dto)));
+    public UserDto create(UserDto dto) throws JsonProcessingException {
+        UserDto userDto = mapper.toDto(repository.save(mapper.toEntity(dto)));
+        log.info("New User saved: {}", new ObjectMapper().writeValueAsString(userDto));
+        return userDto;
     }
 
     @Override
-    public UserDto update(UserDto dto) {
+    public UserDto update(UserDto dto) throws JsonProcessingException {
         User user = repository.findById(dto.getId())
                 .orElseThrow(() -> new DataBaseException(String.format("Пользователь с ID %d не существует.", dto.getId())));
-        return mapper.toDto(repository.save(mapper.toEntity(dto, user)));
+        UserDto userDto = mapper.toDto(repository.save(mapper.toEntity(dto, user)));
+        log.info("New User saved: {}", new ObjectMapper().writeValueAsString(userDto));
+        return userDto;
     }
 
     @Override
@@ -53,6 +61,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean delete(Long id) {
         repository.deleteById(id);
-        return !repository.findById(id).isPresent();
+        boolean deleted = !repository.findById(id).isPresent();
+        if (deleted) {
+            log.info("User deleted by ID: {}", id);
+        }
+        return deleted;
     }
 }

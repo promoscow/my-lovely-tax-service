@@ -30,6 +30,7 @@ public class User extends AbstractEntity {
     private String name;
     private String email;
     private Long inn;
+    private Long ogrn;
 
     @Column(name = "username", unique = true)
     public String getUsername() {
@@ -54,5 +55,10 @@ public class User extends AbstractEntity {
     @Column(name = "inn", unique = true)
     public Long getInn() {
         return inn;
+    }
+
+    @Column(name = "ogrn")
+    public Long getOgrn() {
+        return ogrn;
     }
 }
