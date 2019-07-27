@@ -14,6 +14,7 @@ import ru.xpendence.mylovelytaxservice.transfer.Validation;
  * Time: 12:23
  * e-mail: v.chernyshov@pflb.ru
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {
