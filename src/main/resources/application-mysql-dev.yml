@@ -1,0 +1,25 @@
+spring:
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/slimer?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: slimer
+    password: slimer_q1w2e3r4!@
+
+  flyway:
+    locations: classpath:db/migration,classpath:db/develop
+
+  security:
+    user:
+      name: admin
+      password: q1w2e3r4!@
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+
+server:
+  port: 8081

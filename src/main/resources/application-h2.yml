@@ -1,0 +1,24 @@
+spring:
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    username: root
+    password: root
+
+  flyway:
+    locations: classpath:db/migration,classpath:db/develop
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+server:
+  port: 8081
