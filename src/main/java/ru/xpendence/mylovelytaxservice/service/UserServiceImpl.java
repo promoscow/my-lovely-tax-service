@@ -65,8 +65,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getByCredentials(String username, String password) {
-        return repository.getByUsernameAndPassword(username, password)
-                .orElseThrow(() -> new DataBaseException("Неправильная пара \"логин-пароль\"."));
+        return mapper.toDto(repository.getByUsernameAndPassword(username, password)
+                .orElseThrow(() -> new DataBaseException("Неправильная пара \"логин-пароль\".")));
     }
 
     @Override
