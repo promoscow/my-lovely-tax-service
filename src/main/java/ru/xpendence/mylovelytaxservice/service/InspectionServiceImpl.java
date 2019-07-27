@@ -1,9 +1,13 @@
 package ru.xpendence.mylovelytaxservice.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import ru.xpendence.mylovelytaxservice.dto.EmailDto;
 import ru.xpendence.mylovelytaxservice.dto.InspectionDto;
+import ru.xpendence.mylovelytaxservice.dto.ResponseDto;
 import ru.xpendence.mylovelytaxservice.entity.Inspection;
 import ru.xpendence.mylovelytaxservice.exception.DataBaseException;
 import ru.xpendence.mylovelytaxservice.mapper.impl.InspectionMapper;
@@ -26,14 +30,23 @@ public class InspectionServiceImpl implements InspectionService {
     private final InspectionRepository repository;
     private final InspectionMapper mapper;
     private final UserService userService;
+    private final RestTemplate restTemplate;
 
     public InspectionServiceImpl(InspectionMapper mapper,
                                  InspectionRepository repository,
-                                 UserService userService) {
+                                 UserService userService,
+                                 RestTemplate restTemplate) {
         this.mapper = mapper;
         this.repository = repository;
         this.userService = userService;
+        this.restTemplate = restTemplate;
     }
+
+    @Value("${message.sender.path}")
+    private String messageSenderPath;
+
+    @Value("${message.sender.port}")
+    private String messageSenderPort;
 
     @Override
     public InspectionDto get(Long id) {
@@ -60,6 +73,26 @@ public class InspectionServiceImpl implements InspectionService {
                 throw new DataBaseException("Ошибка обновления справочника проверок.");
             }
         }
-        System.out.println();
+    }
+
+    @Scheduled(initialDelay = 604800000L, fixedDelay = 604800000L)
+    public void inform() {
+        LocalDate now = LocalDate.now();
+        LocalDate start = now.withDayOfMonth(1);
+        LocalDate finish = now.withDayOfMonth(now.lengthOfMonth());
+        List<String> emailToInform = userService.getEmailToInform(start, finish);
+        emailToInform
+                .forEach(
+                        e -> restTemplate.postForObject(
+                                String.format("http://%s:%s/email", messageSenderPath, messageSenderPort),
+                                new EmailDto(
+                                        e,
+                                        "slava_rossii@list.ru",
+                                        "У Вас проверка в этом месяце!",
+                                        "Да-да, берегитесь! Придут!"
+                                ),
+                                ResponseDto.class
+                        )
+                );
     }
 }

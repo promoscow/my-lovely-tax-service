@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.xpendence.mylovelytaxservice.dto.UserDto;
@@ -11,6 +12,10 @@ import ru.xpendence.mylovelytaxservice.entity.User;
 import ru.xpendence.mylovelytaxservice.exception.DataBaseException;
 import ru.xpendence.mylovelytaxservice.mapper.impl.UserMapper;
 import ru.xpendence.mylovelytaxservice.repository.UserRepository;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Author: Vyacheslav Chernyshov
@@ -54,8 +59,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<String> getEmailToInform(LocalDate start, LocalDate finish) {
+        return repository.getEmailsForInform(start, finish);
+    }
+
+    @Override
     public Page<UserDto> getAll(Pageable pageable) {
-        return null;
+        Page<User> users = repository.findAll(pageable);
+        return new PageImpl<>(
+                users.getContent()
+                        .stream()
+                        .map(mapper::toDto)
+                        .collect(Collectors.toList()),
+                pageable,
+                users.getTotalElements()
+        );
     }
 
     @Override
