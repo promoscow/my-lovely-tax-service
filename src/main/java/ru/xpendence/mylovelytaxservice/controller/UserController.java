@@ -1,10 +1,11 @@
 package ru.xpendence.mylovelytaxservice.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.xpendence.mylovelytaxservice.dto.UserDto;
 import ru.xpendence.mylovelytaxservice.service.UserService;
+import ru.xpendence.mylovelytaxservice.transfer.Validation;
 
 /**
  * Author: Vyacheslav Chernyshov
@@ -23,12 +24,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> create(@RequestBody UserDto dto) throws JsonProcessingException {
+    public ResponseEntity<UserDto> create(@Validated(value = Validation.New.class) @RequestBody UserDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
     @PutMapping
-    public ResponseEntity<UserDto> update(@RequestBody UserDto dto) {
+    public ResponseEntity<UserDto> update(@Validated(value = Validation.Exists.class) @RequestBody UserDto dto) {
         return ResponseEntity.ok(service.update(dto));
     }
 

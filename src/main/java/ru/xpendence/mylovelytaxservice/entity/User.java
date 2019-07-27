@@ -31,7 +31,7 @@ public class User extends AbstractEntity {
     private String email;
     private Long inn;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     public String getUsername() {
         return username;
     }
@@ -46,12 +46,12 @@ public class User extends AbstractEntity {
         return name;
     }
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     public String getEmail() {
         return email;
     }
 
-    @Column(name = "inn")
+    @Column(name = "inn", unique = true)
     public Long getInn() {
         return inn;
     }

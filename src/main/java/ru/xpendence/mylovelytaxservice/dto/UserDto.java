@@ -2,6 +2,10 @@ package ru.xpendence.mylovelytaxservice.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import ru.xpendence.mylovelytaxservice.transfer.Validation;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 /**
  * Author: Vyacheslav Chernyshov
@@ -13,9 +17,19 @@ import lombok.EqualsAndHashCode;
 @Data
 public class UserDto extends AbstractDto {
 
+    @NotNull(groups = {Validation.New.class})
+    @Null(groups = {Validation.Exists.class})
     private String username;
+
+    @NotNull(groups = {Validation.New.class})
     private String password;
+
+    @NotNull(groups = {Validation.New.class})
     private String name;
+
+    @NotNull(groups = {Validation.New.class})
     private String email;
+
+    @NotNull(groups = {Validation.New.class})
     private Long inn;
 }
