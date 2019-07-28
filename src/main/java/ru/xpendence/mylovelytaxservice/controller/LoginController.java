@@ -13,6 +13,7 @@ import ru.xpendence.mylovelytaxservice.transfer.Validation;
  * Time: 21:57
  * e-mail: v.chernyshov@pflb.ru
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/login")
 @CrossOrigin

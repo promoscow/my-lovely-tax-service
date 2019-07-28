@@ -13,6 +13,7 @@ import ru.xpendence.mylovelytaxservice.exception.DataBaseException;
 import ru.xpendence.mylovelytaxservice.mapper.impl.InspectionMapper;
 import ru.xpendence.mylovelytaxservice.repository.InspectionRepository;
 import ru.xpendence.mylovelytaxservice.util.InspectionsParser;
+import ru.xpendence.mylovelytaxservice.util.TextUtils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -48,6 +49,12 @@ public class InspectionServiceImpl implements InspectionService {
     @Value("${message.sender.port}")
     private String messageSenderPort;
 
+    @Value("${text.rules}")
+    private String rulesFile;
+
+    @Value("${text.check}")
+    private String checkFile;
+
     @Override
     public InspectionDto get(Long id) {
         return mapper.toDto(repository.findById(id)
@@ -60,6 +67,16 @@ public class InspectionServiceImpl implements InspectionService {
                 .stream().anyMatch(i -> i.getStartDate().getMonth().equals(LocalDate.now().getMonth())
                         || i.getStartDate().plusDays(3L).getMonth().equals(LocalDate.now().getMonth())
                 );
+    }
+
+    @Override
+    public List<String> getRules() {
+        return TextUtils.getText(rulesFile);
+    }
+
+    @Override
+    public List<String> getCheck() {
+        return TextUtils.getText(checkFile);
     }
 
     @Override

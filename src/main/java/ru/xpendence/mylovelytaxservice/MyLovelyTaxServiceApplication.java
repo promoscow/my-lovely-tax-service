@@ -16,7 +16,8 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 @EnableScheduling
 @PropertySources(
         value = {
-                @PropertySource("classpath:path.properties")
+                @PropertySource("classpath:path.properties"),
+                @PropertySource("classpath:text.properties")
         }
 )
 public class MyLovelyTaxServiceApplication {
