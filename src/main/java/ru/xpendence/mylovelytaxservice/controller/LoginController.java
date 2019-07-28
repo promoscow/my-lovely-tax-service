@@ -16,7 +16,6 @@ import ru.xpendence.mylovelytaxservice.transfer.Validation;
 @CrossOrigin
 @RestController
 @RequestMapping("/login")
-@CrossOrigin
 public class LoginController {
 
     private final LoginService service;
